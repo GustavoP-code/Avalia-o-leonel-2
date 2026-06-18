@@ -1,0 +1,30 @@
+CREATE DATABASE IF NOT EXISTS locadora_veiculos;
+USE locadora_veiculos;
+
+CREATE TABLE clientes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    data_nascimento DATE NOT NULL,
+    cidade VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE veiculos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    modelo VARCHAR(50) NOT NULL,
+    placa VARCHAR(10) NOT NULL UNIQUE,
+    categoria VARCHAR(30) NOT NULL,
+    valor_diaria DECIMAL(10,2) NOT NULL,
+    status VARCHAR(20) DEFAULT 'disponivel'
+);
+
+CREATE TABLE locacoes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    cliente_id INT NOT NULL,
+    veiculo_id INT NOT NULL,
+    data_retirada DATE NOT NULL,
+    data_prevista DATE NOT NULL,
+    data_devolucao DATE NULL,
+    status VARCHAR(30) DEFAULT 'Ativo',
+    FOREIGN KEY (cliente_id) REFERENCES clientes(id),
+    FOREIGN KEY (veiculo_id) REFERENCES veiculos(id)
+);
